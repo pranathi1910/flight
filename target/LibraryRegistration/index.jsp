@@ -87,5 +87,70 @@ pipeline {
         }
     }
 }
+docker-compose up –d
+ docker-compose down
+docker-compose up --scale wordpress=2 -d
+docker-compose logs -f
+docker ps
+docker exec -it mydocker-db-1 mysql -u root -p or docker exec -it mydocker-db-1 mysql -u wp_user -p
+show databases;
+use wordpress_db
+show tables
+exit
+code:
+version: '3.8'
+services:
+  # Run WordPress Service
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    ports:
+      - "8081:80"        # Access WordPress at http://localhost:8081
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_pass
+      WORDPRESS_DB_NAME: wordpress_db
+    depends_on:
+      - db
+    volumes:
+      - wordpress_data:/var/www/html
 
+  # Run MySQL Service
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: wp_pass
+    volumes:
+      - db_data:/var/lib/mysql
+
+# Persistent Storage
+volumes:
+  wordpress_data:
+  db_data:
+
+Dockerfile:
+FROM alpine
+
+# Install Redis without caching to keep the image small
+RUN apk add --no-cache redis
+
+# Run Redis server
+CMD ["redis-server"]
+commands:
+docker build -t csmimage:01 .
+docker login
+docker tag csmimage:01  kumbhambhargavi/secondimage
+ docker push kumbhambhargavi/secondimage
+https://hub.docker.com/r/pranathibiyyala/secondimage
+docker pull kumbhambhargavi/secondimage:latest
+docker run -it pranathibiyyala/secondimage
+docker pull hello-world:latest
+docker images
+docker tag hello-world:latest pranathibiyyala/hello-world:latest
+docker push pranathibiyyala/hello-world:latest
 
