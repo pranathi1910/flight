@@ -152,5 +152,5 @@ docker run -it pranathibiyyala/secondimage
 docker pull hello-world:latest
 docker images
 docker tag hello-world:latest pranathibiyyala/hello-world:latest
-docker push pranathibiyyala/hello-world:latest
+docker push pranathibiyyala/hello-world:latest.
 
